@@ -67,3 +67,18 @@ def edit_note():
                     file_writer.writerow({"Id": row["Id"], "Название": row["Название"], "Тело": row["Тело"], "Дата" : row["Дата"]})
     os.remove("notes.csv")
     os.rename("new_notes.csv", "notes.csv")
+
+
+def filter_of_date():
+    date = input('Введите дату: ')
+    with open("notes.csv", encoding='utf-8') as r_file:
+        file_reader = csv.DictReader(r_file, delimiter = ";")
+        for row in file_reader:
+            if row["Дата"] == date:
+                for key, value in row.items():
+                    print("{0}: {1}".format(key,value))
+                print('-----------------------------------')
+
+
+
+   
