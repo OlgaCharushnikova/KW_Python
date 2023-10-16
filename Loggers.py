@@ -42,3 +42,28 @@ def del_note():
                     ffile.writerow({"Id": row["Id"], "Название": row["Название"], "Тело": row["Тело"], "Дата" : row["Дата"]})
     os.remove("notes.csv")
     os.rename("new_notes.csv", "notes.csv")  
+
+
+def edit_note():
+    del_Id = input('Введите Id: ')
+    with open("notes.csv", encoding='utf-8') as f:
+        file = csv.DictReader(f, delimiter = ";")
+        new_title = input('Введите новое название: ')
+        new_body = input('Введите новое тело заметки: ')
+        new_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        with open("new_notes.csv", mode="w", encoding='utf-8') as ff:
+                new_entry = ["Id", "Название","Тело", "Дата"]
+                ffile = csv.DictWriter(ff, delimiter = ";", 
+                                            lineterminator="\r", fieldnames=new_entry)
+                file.writeheader()
+                file.writerow({"Id": del_Id, "Название": new_title, "Тело": new_body, "Дата" : new_date})
+        for row in file:        
+            if row["Id"] != del_Id and row["Id"] != 'Id':
+                with open("new_notes.csv", mode="a", encoding='utf-8') as w_file:
+                    new_entry = ["Id", "Название","Тело", "Дата"]
+                    file_writer = csv.DictWriter(w_file, delimiter = ";", 
+                                            lineterminator="\r", fieldnames=new_entry)
+                    file_writer.writeheader()
+                    file_writer.writerow({"Id": row["Id"], "Название": row["Название"], "Тело": row["Тело"], "Дата" : row["Дата"]})
+    os.remove("notes.csv")
+    os.rename("new_notes.csv", "notes.csv")
