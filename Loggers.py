@@ -80,5 +80,13 @@ def filter_of_date():
                 print('-----------------------------------')
 
 
-
+def print_note():
+    id = input('Введите Id записи: ')
+    with open("notes.csv", encoding='utf-8') as r_file:
+        file_reader = csv.DictReader(r_file, delimiter = ";")
+        for row in file_reader:
+            if row["Id"] == id:
+                for key, value in row.items():
+                    print("{0}: {1}".format(key,value))
+                print('-----------------------------------')   
    
